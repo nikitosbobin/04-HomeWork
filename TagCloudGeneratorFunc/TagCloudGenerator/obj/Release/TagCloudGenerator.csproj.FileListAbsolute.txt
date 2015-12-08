@@ -1,0 +1,9 @@
+C:\Users\nikit\Documents\VSGit\03-design-hw\TagCloudGenerator\TagCloudGenerator\bin\Release\TagCloudGenerator.exe.config
+C:\Users\nikit\Documents\VSGit\03-design-hw\TagCloudGenerator\TagCloudGenerator\bin\Release\TagCloudGenerator.exe
+C:\Users\nikit\Documents\VSGit\03-design-hw\TagCloudGenerator\TagCloudGenerator\bin\Release\TagCloudGenerator.pdb
+C:\Users\nikit\Documents\VSGit\03-design-hw\TagCloudGenerator\TagCloudGenerator\bin\Release\Ninject.dll
+C:\Users\nikit\Documents\VSGit\03-design-hw\TagCloudGenerator\TagCloudGenerator\bin\Release\nunit.framework.dll
+C:\Users\nikit\Documents\VSGit\03-design-hw\TagCloudGenerator\TagCloudGenerator\bin\Release\Ninject.xml
+C:\Users\nikit\Documents\VSGit\03-design-hw\TagCloudGenerator\TagCloudGenerator\bin\Release\nunit.framework.xml
+C:\Users\nikit\Documents\VSGit\03-design-hw\TagCloudGenerator\TagCloudGenerator\obj\Release\TagCloudGenerator.exe
+C:\Users\nikit\Documents\VSGit\03-design-hw\TagCloudGenerator\TagCloudGenerator\obj\Release\TagCloudGenerator.pdb
