@@ -9,8 +9,8 @@ namespace TagCloudGenerator.Classes
     class ImageGenerator : ICloudImageGenerator
     {
         public Bitmap Image { get; set; }
-        public ICloudGenerator Cloud { get; }
-        private IWordBlock[] _words;
+        private WordBlock[] _words;
+        private Size _imageSize;
         private List<SolidBrush> _wordsBrushes;
         private readonly Random _rnd;
         public List<SolidBrush> WordsBrushes
@@ -44,17 +44,16 @@ namespace TagCloudGenerator.Classes
             set { _fontFamily = value; }
         }
 
-        public ImageGenerator(ICloudGenerator cloud)
+        public ImageGenerator(WordBlock[] wordBlocks, Size imageSize)
         {
-            Cloud = cloud;
+            _words = wordBlocks;
+            _imageSize = imageSize;
             _rnd = new Random(DateTime.Now.Millisecond);
         }
 
         public void CreateImage()
         {
-            Cloud.CreateCloud();
-            _words = Cloud.Words;
-            Image = new Bitmap(Cloud.Size.Width, Cloud.Size.Height);
+            Image = new Bitmap(_imageSize.Width, _imageSize.Height);
             var graphics = Graphics.FromImage(Image);
             graphics.Clear(Color.CadetBlue);
             foreach (var word in _words)

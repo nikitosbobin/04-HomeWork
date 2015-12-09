@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 using TagCloudGenerator.Interfaces;
 
@@ -6,17 +6,15 @@ namespace TagCloudGenerator.Classes
 {
     class PngEncoder : IImageEncoder
     {
-        private ICloudImageGenerator cloudImage;
-
-        public PngEncoder(ICloudImageGenerator cloudImage)
+        public PngEncoder(Bitmap image)
         {
-            this.cloudImage = cloudImage;
+            _image = image;
         }
 
-        public void SaveImage(String name)
+        private Bitmap _image;
+        public void SaveImage(string name)
         {
-            cloudImage.CreateImage();
-            cloudImage.Image.Save(name + ".png", ImageFormat.Png); 
+            _image.Save(name + ".png", ImageFormat.Png); 
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using TagCloudGenerator.Interfaces;
-
 namespace TagCloudGenerator.Classes
 {
     class ArchimedSpiralFunctionCloud : PolarFunctionCloud
@@ -26,11 +25,8 @@ namespace TagCloudGenerator.Classes
             return firstItem;
         }
 
-        public ArchimedSpiralFunctionCloud(ITextDecoder decoder, ITextHandler textHandler) : base(decoder, textHandler)
-        {
-        }
-
-        public ArchimedSpiralFunctionCloud(int width, int height, ITextDecoder decoder, ITextHandler textHandler) : base(width, height, decoder, textHandler)
+        public ArchimedSpiralFunctionCloud(Func<IEnumerable<WordBlock>> 
+            getConvertedWords) : base(getConvertedWords)
         {
         }
     }

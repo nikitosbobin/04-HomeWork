@@ -8,25 +8,13 @@ namespace TagCloudGenerator.Classes
 {
     abstract partial class PolarFunctionCloud : ICloudGenerator
     {
+        public readonly Func<IEnumerable<WordBlock>> _getConvertedWords;
         public abstract Point GetBlockCoords();
 
-        public PolarFunctionCloud(ITextDecoder decoder, ITextHandler textHandler)
+        public PolarFunctionCloud(Func<IEnumerable<WordBlock>> getConvertedWords)
         {
-            Generator = new ImageGenerator(this);
-            _decoder = decoder;
-            TextHandler = textHandler;
+            _getConvertedWords = getConvertedWords;
             frames = new HashSet<Rectangle>();
-        }
-
-        public PolarFunctionCloud(int width, int height, ITextDecoder decoder,
-            ITextHandler textHandler)
-        {
-            _decoder = decoder;
-            Size = new Size(width, height);
-            TextHandler = textHandler;
-            frames = new HashSet<Rectangle>();
-            MoreDensity = false;
-            WordScale = 7;
         }
 
         public void DrawNextWord(IWordBlock word)
@@ -68,9 +56,8 @@ namespace TagCloudGenerator.Classes
             set { _fontFamily = value; }
         }
         private float _wordScale;
-        public IWordBlock[] Words { get; set; }
-
-        public ICloudImageGenerator Generator { get; }
+        public WordBlock[] Words { get; set; }
+        
 
         public float WordScale
         {
@@ -90,8 +77,7 @@ namespace TagCloudGenerator.Classes
         }
         public bool MoreDensity { get; set; }
 
-        private readonly ITextDecoder _decoder;
-        public ITextHandler TextHandler { get; set; }
+        private readonly string[] _decodedText;
 
         private float _currentFontSize;
         private HashSet<Rectangle> frames;
@@ -112,7 +98,7 @@ namespace TagCloudGenerator.Classes
 
         public void CreateCloud()
         {
-            Words = TextHandler.GetWords(_decoder).OrderByDescending(u => u.Frequency).ToArray();
+            Words = _getConvertedWords().OrderByDescending(u => u.Frequency).ToArray();
             _currentFontSize = Size.Height * WordScale;
             int currentFreq = Words[0].Frequency;
             foreach (var word in Words)

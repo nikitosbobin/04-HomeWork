@@ -30,10 +30,14 @@ namespace TagCloudGenerator.Classes
         }
 
         public ICloudGenerator Cloud { get; }
+        public ICloudImageGenerator Generator { get; }
+        public ITextHandler TextHandler { get; }
 
-        public CommandsParser(ICloudGenerator cloud, string[] args)
+        public CommandsParser(ICloudGenerator cloud, ICloudImageGenerator generator, ITextHandler handler,string[] args)
         {
             Cloud = cloud;
+            Generator = generator;
+            TextHandler = handler;
             RegisteredCommands = new Dictionary<string, ICommand>
             {
                 { "size", new SetSize(this) },

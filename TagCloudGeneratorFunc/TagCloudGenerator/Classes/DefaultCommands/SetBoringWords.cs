@@ -14,7 +14,7 @@ namespace TagCloudGenerator.Classes.DefaultCommands
 
         public void Execute()
         {
-            ParentParser.Cloud.TextHandler.BoringWords = _boringWords;
+            ParentParser.TextHandler.BoringWords = _boringWords;
         }
 
         public ICommand CreateCommand(string stringCommand)

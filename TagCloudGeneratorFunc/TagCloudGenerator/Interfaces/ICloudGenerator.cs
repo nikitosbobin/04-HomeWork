@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagCloudGenerator.Classes;
 
 namespace TagCloudGenerator.Interfaces
 {
@@ -6,9 +7,7 @@ namespace TagCloudGenerator.Interfaces
     {
         void CreateCloud();
         Size Size { get; set; }
-        ITextHandler TextHandler { get; set; }
-        IWordBlock[] Words { get; set; }
-        ICloudImageGenerator Generator { get; }
+        WordBlock[] Words { get; set; }
         float WordScale { get; set; }
         string FontFamily { get; set; }
         bool MoreDensity { get; set; }

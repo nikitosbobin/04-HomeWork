@@ -6,8 +6,9 @@ namespace TagCloudGenerator.Classes
 {
     class SimpleTextHandler : ITextHandler
     {
-        public SimpleTextHandler(params string[] boringWords)
+        public SimpleTextHandler(string[] decodedText, params string[] boringWords)
         {
+            _decodedLines = decodedText;
             BoringWords = new HashSet<string>(boringWords ?? new string[0]);
         }
 
@@ -16,9 +17,8 @@ namespace TagCloudGenerator.Classes
         public HashSet<string> BoringWords { get; set; }
         private WordBlock[] _words;
 
-        public IEnumerable<IWordBlock> GetWords(ITextDecoder decoder)
+        public IEnumerable<WordBlock> GetWordBlockArray()
         {
-            _decodedLines = decoder.GetDecodedText();
             CreateInnerWords();
             return _words;
         }

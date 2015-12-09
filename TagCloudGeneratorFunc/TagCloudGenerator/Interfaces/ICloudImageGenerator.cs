@@ -6,7 +6,6 @@ namespace TagCloudGenerator.Interfaces
     interface ICloudImageGenerator
     {
         Bitmap Image { get; set; }
-        ICloudGenerator Cloud { get; }
         List<SolidBrush> WordsBrushes { get; set; }
         void CreateImage();
     }

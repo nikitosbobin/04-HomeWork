@@ -1,6 +1,4 @@
 ﻿using System;
-using Ninject;
-using TagCloudGenerator.Interfaces;
 
 namespace TagCloudGenerator.Classes
 {
@@ -8,18 +6,17 @@ namespace TagCloudGenerator.Classes
     {
         static void Main(string[] args)
         {
-            var kernel = new StandardKernel();
-            kernel.Bind<ITextDecoder>().To<TxtDecoder>().WithConstructorArgument(args[0]);
-            kernel.Bind<ITextHandler>().To<SimpleTextHandler>();
-            kernel.Bind<ICloudGenerator>().To<ArchimedSpiralFunctionCloud>();
-            kernel.Bind<CommandsParser>().ToSelf()
-                .WithConstructorArgument("cloud", kernel.Get<ICloudGenerator>())
-                .WithConstructorArgument("args", args);
-            if (kernel.Get<CommandsParser>().ExecuteAllCommands())
+            var decoder = new TxtDecoder(args[0]);
+            var handler = new SimpleTextHandler(decoder.GetDecodedText());
+            var cloud = new ArchimedSpiralFunctionCloud(() => handler.GetWordBlockArray());
+            cloud.CreateCloud();
+            var cloudDrawer = new ImageGenerator(cloud.Words, cloud.Size);
+            var commandsParser = new CommandsParser(cloud, cloudDrawer, args);
+            cloudDrawer.CreateImage();
+            if (commandsParser.ExecuteAllCommands())
             {
-                kernel.Bind<IImageEncoder>().To<PngEncoder>()
-                    .WithConstructorArgument("cloudImage", kernel.Get<CommandsParser>().Cloud.Generator);
-                kernel.Get<IImageEncoder>().SaveImage("out");
+                var encoder = new PngEncoder(cloudDrawer.Image);
+                encoder.SaveImage("out");
                 Console.WriteLine("Я всё");
             }
             Console.ReadKey();

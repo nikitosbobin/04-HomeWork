@@ -13,7 +13,20 @@ namespace TagCloudGenerator.Classes
 
         public string Source { get; set; }
         public int Frequency { get; set; }
-        public Rectangle WordRectangle { get; set; }
+        private Rectangle _wordRectangle;
+        public Rectangle WordRectangle
+        {
+            get
+            {
+                if (_wordRectangle.Width == 0 && _wordRectangle.Height == 0)
+                    _wordRectangle = new Rectangle(0, 0, (int)(Font.Size * 0.7) * Source.Length, Font.Height);
+                return _wordRectangle;
+            }
+            set
+            {
+                _wordRectangle = value;
+            }
+        }
         private Font _font;
         public Font Font
         {
