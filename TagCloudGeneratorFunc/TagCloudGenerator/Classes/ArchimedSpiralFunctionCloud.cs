@@ -5,6 +5,8 @@ namespace TagCloudGenerator.Classes
 {
     class ArchimedSpiralFunctionCloud : PolarFunctionCloud
     {
+
+
         public override Point GetBlockCoords()
         {
             var nod = GetGreatestCommonDivisor(Size.Height, Size.Width);
@@ -27,6 +29,11 @@ namespace TagCloudGenerator.Classes
 
         public ArchimedSpiralFunctionCloud(Func<IEnumerable<WordBlock>> 
             getConvertedWords) : base(getConvertedWords)
+        {
+        }
+
+        public ArchimedSpiralFunctionCloud(Func<IEnumerable<WordBlock>>
+            getConvertedWords, CommandsParser parser) : base(getConvertedWords, parser)
         {
         }
     }

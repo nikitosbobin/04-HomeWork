@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TagCloudGenerator.Classes.DefaultCommands;
@@ -21,25 +22,26 @@ namespace TagCloudGenerator.Classes
         {
             if (_commands.Count == 1 && _commands.ToArray()[0].GetKeyWord() == "help")
             {
-                _commands.ToArray()[0].Execute();
+                _commands.ToArray()[0].GetResource();
                 return false;
             }
             foreach (var command in _commands)
-                command.Execute();
+                command.GetResource();
             return true;
         }
 
-        public ICloudGenerator Cloud { get; }
-        public ICloudImageGenerator Generator { get; }
-        public ITextHandler TextHandler { get; }
-
-        public CommandsParser(ICloudGenerator cloud, ICloudImageGenerator generator, ITextHandler handler,string[] args)
+        public T GetResource<T>(string key)
         {
-            Cloud = cloud;
-            Generator = generator;
-            TextHandler = handler;
+            if (RegisteredCommands.ContainsKey(key))
+                return (T) RegisteredCommands[key].GetResource();
+            return default(T);
+        }
+
+        public CommandsParser(string[] args)
+        {
             RegisteredCommands = new Dictionary<string, ICommand>
             {
+                { "path", new SetPath(this) },
                 { "size", new SetSize(this) },
                 { "scale", new SetWordsScale(this) },
                 { "moreDensity", new SetDensityFlag(this) },
@@ -49,10 +51,16 @@ namespace TagCloudGenerator.Classes
                 { "help", new Help(this) }
             };
             _commands = new HashSet<ICommand>();
+
             var pattern = ".+:|.+$";
             string keyWord;
             foreach (var command in args)
             {
+                if (File.Exists(command))
+                {
+                    _commands.Add(RegisteredCommands["path"].CreateCommand(command));
+                    continue;
+                }
                 keyWord = Regex.Match(command, pattern).ToString().Replace(":", "");
                 if (RegisteredCommands.ContainsKey(keyWord))
                     _commands.Add(RegisteredCommands[keyWord].CreateCommand(command));

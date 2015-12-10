@@ -10,6 +10,16 @@ namespace TagCloudGenerator.Classes
     {
         public readonly Func<IEnumerable<WordBlock>> _getConvertedWords;
         public abstract Point GetBlockCoords();
+        
+        public PolarFunctionCloud(Func<IEnumerable<WordBlock>> getConvertedWords, CommandsParser parser)
+        {
+            _getConvertedWords = getConvertedWords;
+            frames = new HashSet<Rectangle>();
+            WordScale = parser.GetResource<int>("scale");
+            Size = parser.GetResource<Size>("size");
+            MoreDensity = parser.GetResource<bool>("moreDensity");
+            FontFamily = parser.GetResource<string>("font");
+        }
 
         public PolarFunctionCloud(Func<IEnumerable<WordBlock>> getConvertedWords)
         {

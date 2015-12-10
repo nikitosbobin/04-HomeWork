@@ -6,19 +6,16 @@ namespace TagCloudGenerator.Classes
     {
         static void Main(string[] args)
         {
-            var decoder = new TxtDecoder(args[0]);
-            var handler = new SimpleTextHandler(decoder.GetDecodedText());
-            var cloud = new ArchimedSpiralFunctionCloud(() => handler.GetWordBlockArray());
+            var parser = new CommandsParser(args);
+            var decoder = new TxtDecoder(parser);
+            var handler = new SimpleTextHandler(decoder.GetDecodedText(), parser);
+            var cloud = new ArchimedSpiralFunctionCloud(() => handler.GetWordBlockArray(), parser);
             cloud.CreateCloud();
-            var cloudDrawer = new ImageGenerator(cloud.Words, cloud.Size);
-            var commandsParser = new CommandsParser(cloud, cloudDrawer, args);
+            var cloudDrawer = new ImageGenerator(cloud.Words, parser);
             cloudDrawer.CreateImage();
-            if (commandsParser.ExecuteAllCommands())
-            {
-                var encoder = new PngEncoder(cloudDrawer.Image);
-                encoder.SaveImage("out");
-                Console.WriteLine("Я всё");
-            }
+            var encoder = new PngEncoder(cloudDrawer.Image);
+            encoder.SaveImage("out");
+            Console.WriteLine("Я всё");
             Console.ReadKey();
         }
     }

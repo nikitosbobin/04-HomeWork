@@ -1,43 +1,40 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+using System.IO;
 using TagCloudGenerator.Interfaces;
 
 namespace TagCloudGenerator.Classes.DefaultCommands
 {
-    class SetFontFamily : ICommand
+    class SetPath : ICommand
     {
-        public SetFontFamily(CommandsParser parser)
+        public SetPath(CommandsParser parser)
         {
             ParentParser = parser;
         }
 
         public object GetResource()
         {
-            return _fontFamily;
+            return _path;
         }
+
+        private string _path;
 
         public ICommand CreateCommand(string stringCommand)
         {
-            var pattern = "font:[a-zA-Z ]";
-            if (!Regex.IsMatch(stringCommand, pattern))
+            if (!File.Exists(stringCommand))
                 throw new Exception();
-            stringCommand = stringCommand.Substring(5);
-            _fontFamily = stringCommand;
+            _path = stringCommand;
             return this;
         }
 
         public CommandsParser ParentParser { get; }
-
         public string GetKeyWord()
         {
-            return "font";
+            return "path";
         }
-
-        private string _fontFamily;
 
         public string GetDescription()
         {
-            return "Задаёт шрифт печати слов.\nИспользование:\nfont:[Font name]";
+            return "Параметр задаёт файл с входным текстом.\nИспользование:\nПуть к файлу задаётся без ключевых слов";
         }
     }
 }

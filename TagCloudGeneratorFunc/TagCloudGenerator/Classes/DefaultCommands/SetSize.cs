@@ -12,9 +12,9 @@ namespace TagCloudGenerator.Classes.DefaultCommands
             ParentParser = parser;
         }
 
-        public void Execute()
+        public object GetResource()
         {
-            ParentParser.Cloud.Size = _size;
+            return _size;
         }
 
         public ICommand CreateCommand(string stringCommand)

@@ -44,6 +44,14 @@ namespace TagCloudGenerator.Classes
             set { _fontFamily = value; }
         }
 
+        public ImageGenerator(WordBlock[] wordBlocks, CommandsParser parser)
+        {
+            _words = wordBlocks;
+            _imageSize = parser.GetResource<Size>("size");
+            WordsBrushes = parser.GetResource<List<SolidBrush>>("colors");
+            _rnd = new Random(DateTime.Now.Millisecond);
+        }
+
         public ImageGenerator(WordBlock[] wordBlocks, Size imageSize)
         {
             _words = wordBlocks;

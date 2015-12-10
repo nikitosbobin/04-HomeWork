@@ -12,6 +12,16 @@ namespace TagCloudGenerator.Classes
             BoringWords = new HashSet<string>(boringWords ?? new string[0]);
         }
 
+        public SimpleTextHandler(string[] decodedText, CommandsParser parser)
+        {
+            _decodedLines = decodedText;
+            var tempBoring = parser.GetResource<HashSet<string>>("boring");
+            if (tempBoring != null)
+                BoringWords = tempBoring;
+            else 
+                BoringWords = new HashSet<string>();
+        }
+
         private Dictionary<string, WordBlock> _innerWords;
         private string[] _decodedLines;
         public HashSet<string> BoringWords { get; set; }

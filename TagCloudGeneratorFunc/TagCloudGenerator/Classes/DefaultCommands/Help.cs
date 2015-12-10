@@ -10,12 +10,13 @@ namespace TagCloudGenerator.Classes.DefaultCommands
             ParentParser = parser;
         }
 
-        public void Execute()
+        public object GetResource()
         {
             foreach (var command in ParentParser.RegisteredCommands)
             {
                 Console.WriteLine(command.Value.GetDescription());
             }
+            return null;
         }
 
         public ICommand CreateCommand(string stringCommand)

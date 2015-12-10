@@ -53,6 +53,7 @@
     <Compile Include="Classes\DefaultCommands\Help.cs" />
     <Compile Include="Classes\DefaultCommands\SetFontFamily.cs" />
     <Compile Include="Classes\DefaultCommands\SetDensityFlag.cs" />
+    <Compile Include="Classes\DefaultCommands\SetPath.cs" />
     <Compile Include="Classes\DefaultCommands\SetWordsColors.cs" />
     <Compile Include="Classes\DefaultCommands\SetWordsScale.cs" />
     <Compile Include="Classes\ImageGenerator.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Classes\Program.cs" />
     <Compile Include="Classes\ArchimedSpiralFunctionCloud.cs" />
     <Compile Include="Interfaces\ICommand.cs" />
+    <Compile Include="Interfaces\ICommandExecutable.cs" />
     <Compile Include="Interfaces\IImageEncoder.cs" />
     <Compile Include="Interfaces\ITextDecoder.cs" />
     <Compile Include="Interfaces\ITextHandler.cs" />

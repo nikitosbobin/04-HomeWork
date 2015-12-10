@@ -12,9 +12,9 @@ namespace TagCloudGenerator.Classes.DefaultCommands
             ParentParser = parser;
         }
 
-        public void Execute()
+        public object GetResource()
         {
-            ParentParser.TextHandler.BoringWords = _boringWords;
+            return _boringWords;
         }
 
         public ICommand CreateCommand(string stringCommand)
