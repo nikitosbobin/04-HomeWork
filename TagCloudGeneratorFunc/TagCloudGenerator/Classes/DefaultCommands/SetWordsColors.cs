@@ -8,10 +8,6 @@ namespace TagCloudGenerator.Classes.DefaultCommands
 {
     class SetWordsColors : ICommand
     {
-        public SetWordsColors(CommandsParser parser)
-        {
-            ParentParser = parser;
-        }
 
         public object GetResource()
         {
@@ -44,8 +40,6 @@ namespace TagCloudGenerator.Classes.DefaultCommands
             }
             return this;
         }
-
-        public CommandsParser ParentParser { get; }
 
         public string GetKeyWord()
         {

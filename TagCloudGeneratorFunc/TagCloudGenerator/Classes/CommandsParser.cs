@@ -41,19 +41,18 @@ namespace TagCloudGenerator.Classes
         {
             RegisteredCommands = new Dictionary<string, ICommand>
             {
-                { "path", new SetPath(this) },
-                { "size", new SetSize(this) },
-                { "scale", new SetWordsScale(this) },
-                { "moreDensity", new SetDensityFlag(this) },
-                { "boring", new SetBoringWords(this) },
-                { "font", new SetFontFamily(this) },
-                { "colors", new SetWordsColors(this)},
-                { "help", new Help(this) }
+                { "path", new SetPath() },
+                { "size", new SetSize() },
+                { "scale", new SetWordsScale() },
+                { "moreDensity", new SetDensityFlag() },
+                { "boring", new SetBoringWords() },
+                { "font", new SetFontFamily() },
+                { "colors", new SetWordsColors()},
+                { "help", new Help(RegisteredCommands) }
             };
             _commands = new HashSet<ICommand>();
 
-            var pattern = ".+:|.+$";
-            string keyWord;
+            const string pattern = ".+:|.+$";
             foreach (var command in args)
             {
                 if (File.Exists(command))
@@ -61,22 +60,9 @@ namespace TagCloudGenerator.Classes
                     _commands.Add(RegisteredCommands["path"].CreateCommand(command));
                     continue;
                 }
-                keyWord = Regex.Match(command, pattern).ToString().Replace(":", "");
+                var keyWord = Regex.Match(command, pattern).ToString().Replace(":", "");
                 if (RegisteredCommands.ContainsKey(keyWord))
                     _commands.Add(RegisteredCommands[keyWord].CreateCommand(command));
-            }
-        }
-
-        public bool AddForeignCommand(string keyWord, ICommand command)
-        {
-            try
-            {
-                RegisteredCommands.Add(keyWord, command);
-                return true;
-            }
-            catch
-            {
-                return false;
             }
         }
     }

@@ -11,11 +11,6 @@ namespace TagCloudGenerator.Classes
             Path = path;
         }
 
-        public TxtDecoder(CommandsParser parser)
-        {
-            Path = parser.GetResource<string>("path");
-        }
-
         public string Path { get; set; }
 
         public string[] GetDecodedText()

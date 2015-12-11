@@ -6,11 +6,6 @@ namespace TagCloudGenerator.Classes.DefaultCommands
 {
     class SetFontFamily : ICommand
     {
-        public SetFontFamily(CommandsParser parser)
-        {
-            ParentParser = parser;
-        }
-
         public object GetResource()
         {
             return _fontFamily;
@@ -25,8 +20,6 @@ namespace TagCloudGenerator.Classes.DefaultCommands
             _fontFamily = stringCommand;
             return this;
         }
-
-        public CommandsParser ParentParser { get; }
 
         public string GetKeyWord()
         {

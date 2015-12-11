@@ -6,20 +6,11 @@ namespace TagCloudGenerator.Classes
 {
     class SimpleTextHandler : ITextHandler
     {
-        public SimpleTextHandler(string[] decodedText, params string[] boringWords)
+        public SimpleTextHandler(string[] decodedText, HashSet<string> boringWords = null)
         {
             _decodedLines = decodedText;
-            BoringWords = new HashSet<string>(boringWords ?? new string[0]);
-        }
-
-        public SimpleTextHandler(string[] decodedText, CommandsParser parser)
-        {
-            _decodedLines = decodedText;
-            var tempBoring = parser.GetResource<HashSet<string>>("boring");
-            if (tempBoring != null)
-                BoringWords = tempBoring;
-            else 
-                BoringWords = new HashSet<string>();
+            if (boringWords != null) BoringWords = boringWords;
+            else BoringWords = new HashSet<string>();
         }
 
         private Dictionary<string, WordBlock> _innerWords;

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using System.Linq;
 using TagCloudGenerator.Classes;
 using TagCloudGenerator.Interfaces;
@@ -26,7 +27,7 @@ namespace TagCloudGenerator.Tests
         public static void DoTest(string[] words, IWordBlock[] expected, string[] boring = null)
         {
             ITextDecoder fakeDecoder = new DecoderForTests(words);
-            var handler = new SimpleTextHandler(fakeDecoder.GetDecodedText(), boring);
+            var handler = new SimpleTextHandler(fakeDecoder.GetDecodedText(), new HashSet<string>(boring ?? new string[0]));
             IWordBlock[] actual = handler.GetWordBlockArray().ToArray();
             for (int i = 0; i < expected.Length; ++i)
             {

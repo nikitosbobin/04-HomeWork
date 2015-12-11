@@ -6,7 +6,6 @@ namespace TagCloudGenerator.Interfaces
     {
         object GetResource();
         ICommand CreateCommand(string stringCommand);
-        CommandsParser ParentParser { get; }
         string GetKeyWord();
         string GetDescription();
     }

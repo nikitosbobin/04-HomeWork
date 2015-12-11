@@ -9,9 +9,9 @@ namespace TagCloudGenerator.Classes
 
         public override Point GetBlockCoords()
         {
-            var nod = GetGreatestCommonDivisor(Size.Height, Size.Width);
-            var x = (int)((double)Size.Width / nod * CurrentAngle * Math.Cos(CurrentAngle));
-            var y = (int)((double)Size.Height / nod * CurrentAngle * Math.Sin(CurrentAngle));
+            var gcd = GetGreatestCommonDivisor(Size.Height, Size.Width);
+            var x = (int)((double)Size.Width / gcd * CurrentAngle * Math.Cos(CurrentAngle));
+            var y = (int)((double)Size.Height / gcd * CurrentAngle * Math.Sin(CurrentAngle));
             return new Point(x, y);
         }
 
@@ -33,7 +33,9 @@ namespace TagCloudGenerator.Classes
         }
 
         public ArchimedSpiralFunctionCloud(Func<IEnumerable<WordBlock>>
-            getConvertedWords, CommandsParser parser) : base(getConvertedWords, parser)
+            getConvertedWords, int wordsScale, Size imageSize = default(Size), 
+            string fontFamily = null, bool moreDensity = false) : base(getConvertedWords, 
+                wordsScale, imageSize, fontFamily, moreDensity)
         {
         }
     }

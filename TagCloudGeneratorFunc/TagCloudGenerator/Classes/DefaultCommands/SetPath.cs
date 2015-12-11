@@ -6,10 +6,6 @@ namespace TagCloudGenerator.Classes.DefaultCommands
 {
     class SetPath : ICommand
     {
-        public SetPath(CommandsParser parser)
-        {
-            ParentParser = parser;
-        }
 
         public object GetResource()
         {
@@ -25,8 +21,6 @@ namespace TagCloudGenerator.Classes.DefaultCommands
             _path = stringCommand;
             return this;
         }
-
-        public CommandsParser ParentParser { get; }
         public string GetKeyWord()
         {
             return "path";

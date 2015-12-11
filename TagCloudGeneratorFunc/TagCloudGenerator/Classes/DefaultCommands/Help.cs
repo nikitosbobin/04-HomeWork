@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using TagCloudGenerator.Interfaces;
 
 namespace TagCloudGenerator.Classes.DefaultCommands
 {
     class Help : ICommand
     {
-        public Help(CommandsParser parser)
+        public Help(Dictionary<string, ICommand> registeredCommands)
         {
-            ParentParser = parser;
+            _registeredCommands = registeredCommands;
         }
 
         public object GetResource()
         {
-            foreach (var command in ParentParser.RegisteredCommands)
+            foreach (var command in _registeredCommands)
             {
                 Console.WriteLine(command.Value.GetDescription());
             }
@@ -26,7 +27,7 @@ namespace TagCloudGenerator.Classes.DefaultCommands
             return this;
         }
 
-        public CommandsParser ParentParser { get; }
+        private Dictionary<string, ICommand> _registeredCommands;
 
         public string GetKeyWord()
         {

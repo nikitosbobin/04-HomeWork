@@ -7,10 +7,6 @@ namespace TagCloudGenerator.Classes.DefaultCommands
 {
     class SetBoringWords : ICommand
     {
-        public SetBoringWords(CommandsParser parser)
-        {
-            ParentParser = parser;
-        }
 
         public object GetResource()
         {
@@ -29,8 +25,6 @@ namespace TagCloudGenerator.Classes.DefaultCommands
                 _boringWords.Add(word);
             return this;
         }
-
-        public CommandsParser ParentParser { get; }
 
         public string GetKeyWord()
         {

@@ -7,10 +7,6 @@ namespace TagCloudGenerator.Classes.DefaultCommands
 {
     class SetSize : ICommand
     {
-        public SetSize(CommandsParser parser)
-        {
-            ParentParser = parser;
-        }
 
         public object GetResource()
         {
@@ -27,8 +23,6 @@ namespace TagCloudGenerator.Classes.DefaultCommands
             _size = new Size(int.Parse(splitted[0]), int.Parse(splitted[1]));
             return this;
         }
-
-        public CommandsParser ParentParser { get; }
 
         public string GetKeyWord()
         {
