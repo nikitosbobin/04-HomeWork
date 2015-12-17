@@ -1,6 +1,4 @@
-﻿using TagCloudGenerator.Classes;
-
-namespace TagCloudGenerator.Interfaces
+﻿namespace TagCloudGenerator.Interfaces
 {
     interface ICommand
     {

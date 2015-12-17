@@ -16,9 +16,9 @@ namespace TagCloudGenerator.Classes
             var cloud = new ArchimedSpiralFunctionCloud(handler.GetWordBlockArray().ToArray(), parser.GetResource<int>("scale"),
                 parser.GetResource<Size>("size"), parser.GetResource<string>("font"), parser.GetResource<bool>("moreDensity"));
             cloud.CreateCloud();
-            var cloudDrawer = new ImageGenerator(cloud.Words, parser.GetResource<Size>("size"), parser.GetResource<List<SolidBrush>>("colors"));
-            cloudDrawer.CreateImage();
-            EncodeHelper.SaveImage(cloudDrawer.Image, "out", ImageFormat.Png);
+            var resultImage = ImageHelper.GetCloudImage(cloud.Words, parser.GetResource<Size>("size"),
+                parser.GetResource<List<SolidBrush>>("colors"));
+            ImageHelper.SaveImage(resultImage, "out", ImageFormat.Png);
             Console.WriteLine("Я всё");
             Console.ReadKey();
         }
