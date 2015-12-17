@@ -9,7 +9,7 @@ namespace TagCloudGenerator.Classes
     {
         public static void SaveImage(Bitmap image, string name, ImageFormat format)
         {
-            image.Save(name + format, format);
+            image.Save(name + "." + format, format);
         }
 
         public static Bitmap GetCloudImage(WordBlock[] wordBlocks, Size imageSize, List<SolidBrush> wordsBrushes)

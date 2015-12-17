@@ -49,19 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CommandsHelper.cs" />
     <Compile Include="Classes\ImageHelper.cs" />
-    <Compile Include="Classes\CommandsParser.cs" />
     <Compile Include="Classes\DecodeHelper.cs" />
-    <Compile Include="Classes\DefaultCommands\Help.cs" />
-    <Compile Include="Classes\DefaultCommands\SetFontFamily.cs" />
-    <Compile Include="Classes\DefaultCommands\SetDensityFlag.cs" />
-    <Compile Include="Classes\DefaultCommands\SetPath.cs" />
-    <Compile Include="Classes\DefaultCommands\SetWordsColors.cs" />
-    <Compile Include="Classes\DefaultCommands\SetWordsScale.cs" />
     <Compile Include="Classes\PolarFunctionCloud.cs" />
     <Compile Include="Classes\SimpleTextHandler.cs" />
-    <Compile Include="Classes\DefaultCommands\SetBoringWords.cs" />
-    <Compile Include="Classes\DefaultCommands\SetSize.cs" />
     <Compile Include="Classes\WordBlock.cs" />
     <Compile Include="Interfaces\ICloudGenerator.cs" />
     <Compile Include="Classes\Program.cs" />

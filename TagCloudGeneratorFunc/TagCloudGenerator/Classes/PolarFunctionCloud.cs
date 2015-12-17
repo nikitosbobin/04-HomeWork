@@ -11,14 +11,14 @@ namespace TagCloudGenerator.Classes
         public abstract Point GetBlockCoords();
         
         public PolarFunctionCloud(WordBlock[] words, 
-            int wordsScale = 0, Size imageSize = default(Size), string fontFamily = null, bool moreDensity = false)
+            int wordsScale = 0, Size imageSize = default(Size), Font font = null, bool moreDensity = false)
         {
             Words = words;
             frames = new HashSet<Rectangle>();
             WordScale = wordsScale;
             Size = imageSize;
             MoreDensity = moreDensity;
-            FontFamily = fontFamily;
+            FontFamily = font.Name;
         }
 
         public void DrawNextWord(IWordBlock word)
@@ -80,8 +80,6 @@ namespace TagCloudGenerator.Classes
             }
         }
         public bool MoreDensity { get; set; }
-
-        private readonly string[] _decodedText;
 
         private float _currentFontSize;
         private HashSet<Rectangle> frames;

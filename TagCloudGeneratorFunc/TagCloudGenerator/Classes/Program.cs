@@ -10,14 +10,13 @@ namespace TagCloudGenerator.Classes
     {
         static void Main(string[] args)
         {
-            var parser = new CommandsParser(args);
-            var decodedText = DecodeHelper.GetDecodedTextFromTxt(parser.GetResource<string>("path"));
-            var handler = new SimpleTextHandler(decodedText, parser.GetResource<HashSet<string>>("boring"));
-            var cloud = new ArchimedSpiralFunctionCloud(handler.GetWordBlockArray().ToArray(), parser.GetResource<int>("scale"),
-                parser.GetResource<Size>("size"), parser.GetResource<string>("font"), parser.GetResource<bool>("moreDensity"));
+            var decodedText = DecodeHelper.GetDecodedTextFromTxt(CommandsHelper.GetResource<string>(args));
+            var handler = new SimpleTextHandler(decodedText, CommandsHelper.GetResource<HashSet<string>>(args));
+            var cloud = new ArchimedSpiralFunctionCloud(handler.GetWordBlockArray().ToArray(), CommandsHelper.GetResource<int>(args),
+                CommandsHelper.GetResource<Size>(args), CommandsHelper.GetResource<Font>(args), CommandsHelper.GetResource<bool>(args));
             cloud.CreateCloud();
-            var resultImage = ImageHelper.GetCloudImage(cloud.Words, parser.GetResource<Size>("size"),
-                parser.GetResource<List<SolidBrush>>("colors"));
+            var resultImage = ImageHelper.GetCloudImage(cloud.Words, CommandsHelper.GetResource<Size>(args),
+                CommandsHelper.GetResource<List<SolidBrush>>(args));
             ImageHelper.SaveImage(resultImage, "out", ImageFormat.Png);
             Console.WriteLine("Я всё");
             Console.ReadKey();

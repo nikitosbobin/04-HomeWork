@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 namespace TagCloudGenerator.Classes
 {
     class ArchimedSpiralFunctionCloud : PolarFunctionCloud
     {
-
-
         public override Point GetBlockCoords()
         {
             var gcd = GetGreatestCommonDivisor(Size.Height, Size.Width);
@@ -28,8 +25,8 @@ namespace TagCloudGenerator.Classes
         }
 
         public ArchimedSpiralFunctionCloud(WordBlock[] words, int wordsScale = 0, Size imageSize = default(Size), 
-            string fontFamily = null, bool moreDensity = false) : base(words, wordsScale, 
-                imageSize, fontFamily, moreDensity)
+            Font font = null, bool moreDensity = false) : base(words, wordsScale, 
+                imageSize, font, moreDensity)
         {
         }
     }
