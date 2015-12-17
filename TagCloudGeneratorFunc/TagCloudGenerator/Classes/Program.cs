@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Linq;
 
 namespace TagCloudGenerator.Classes
 {
@@ -9,15 +11,14 @@ namespace TagCloudGenerator.Classes
         static void Main(string[] args)
         {
             var parser = new CommandsParser(args);
-            var decoder = new TxtDecoder(parser.GetResource<string>("path"));
-            var handler = new SimpleTextHandler(decoder.GetDecodedText(), parser.GetResource<HashSet<string>>("boring"));
-            var cloud = new ArchimedSpiralFunctionCloud(() => handler.GetWordBlockArray(), parser.GetResource<int>("scale"),
+            var decodedText = DecodeHelper.GetDecodedTextFromTxt(parser.GetResource<string>("path"));
+            var handler = new SimpleTextHandler(decodedText, parser.GetResource<HashSet<string>>("boring"));
+            var cloud = new ArchimedSpiralFunctionCloud(handler.GetWordBlockArray().ToArray(), parser.GetResource<int>("scale"),
                 parser.GetResource<Size>("size"), parser.GetResource<string>("font"), parser.GetResource<bool>("moreDensity"));
             cloud.CreateCloud();
             var cloudDrawer = new ImageGenerator(cloud.Words, parser.GetResource<Size>("size"), parser.GetResource<List<SolidBrush>>("colors"));
             cloudDrawer.CreateImage();
-            var encoder = new PngEncoder(cloudDrawer.Image);
-            encoder.SaveImage("out");
+            EncodeHelper.SaveImage(cloudDrawer.Image, "out", ImageFormat.Png);
             Console.WriteLine("Я всё");
             Console.ReadKey();
         }

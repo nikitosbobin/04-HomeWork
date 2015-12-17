@@ -1,23 +1,15 @@
 ﻿using System.IO;
 using System.Linq;
-using TagCloudGenerator.Interfaces;
 
 namespace TagCloudGenerator.Classes
 {
-    class TxtDecoder : ITextDecoder
+    static class DecodeHelper
     {
-        public TxtDecoder(string path)
-        {
-            Path = path;
-        }
-
-        public string Path { get; set; }
-
-        public string[] GetDecodedText()
+        public static string[] GetDecodedTextFromTxt(string path)
         {
             try
             {
-                var tmpText = File.ReadAllLines(Path);
+                var tmpText = File.ReadAllLines(path);
                 return tmpText.Select(line => line.ToLower()).ToArray();
             }
             catch

@@ -27,15 +27,9 @@ namespace TagCloudGenerator.Classes
             return firstItem;
         }
 
-        public ArchimedSpiralFunctionCloud(Func<IEnumerable<WordBlock>> 
-            getConvertedWords) : base(getConvertedWords)
-        {
-        }
-
-        public ArchimedSpiralFunctionCloud(Func<IEnumerable<WordBlock>>
-            getConvertedWords, int wordsScale, Size imageSize = default(Size), 
-            string fontFamily = null, bool moreDensity = false) : base(getConvertedWords, 
-                wordsScale, imageSize, fontFamily, moreDensity)
+        public ArchimedSpiralFunctionCloud(WordBlock[] words, int wordsScale = 0, Size imageSize = default(Size), 
+            string fontFamily = null, bool moreDensity = false) : base(words, wordsScale, 
+                imageSize, fontFamily, moreDensity)
         {
         }
     }

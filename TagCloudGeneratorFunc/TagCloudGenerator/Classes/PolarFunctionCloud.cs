@@ -8,24 +8,17 @@ namespace TagCloudGenerator.Classes
 {
     abstract partial class PolarFunctionCloud : ICloudGenerator
     {
-        public readonly Func<IEnumerable<WordBlock>> _getConvertedWords;
         public abstract Point GetBlockCoords();
         
-        public PolarFunctionCloud(Func<IEnumerable<WordBlock>> getConvertedWords, 
-            int wordsScale, Size imageSize = default(Size), string fontFamily = null, bool moreDensity = false)
+        public PolarFunctionCloud(WordBlock[] words, 
+            int wordsScale = 0, Size imageSize = default(Size), string fontFamily = null, bool moreDensity = false)
         {
-            _getConvertedWords = getConvertedWords;
+            Words = words;
             frames = new HashSet<Rectangle>();
             WordScale = wordsScale;
             Size = imageSize;
             MoreDensity = moreDensity;
             FontFamily = fontFamily;
-        }
-
-        public PolarFunctionCloud(Func<IEnumerable<WordBlock>> getConvertedWords)
-        {
-            _getConvertedWords = getConvertedWords;
-            frames = new HashSet<Rectangle>();
         }
 
         public void DrawNextWord(IWordBlock word)
@@ -109,7 +102,7 @@ namespace TagCloudGenerator.Classes
 
         public void CreateCloud()
         {
-            Words = _getConvertedWords().OrderByDescending(u => u.Frequency).ToArray();
+            Words = Words.OrderByDescending(u => u.Frequency).ToArray();
             _currentFontSize = Size.Height * WordScale;
             int currentFreq = Words[0].Frequency;
             foreach (var word in Words)

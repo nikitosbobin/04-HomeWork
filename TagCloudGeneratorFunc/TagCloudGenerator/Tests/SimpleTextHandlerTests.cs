@@ -6,28 +6,12 @@ using TagCloudGenerator.Interfaces;
 
 namespace TagCloudGenerator.Tests
 {
-    class DecoderForTests : ITextDecoder
-    {
-        public DecoderForTests(string[] input)
-        {
-            wordsForTests = input;
-        }
-
-        private string[] wordsForTests;
-
-        public string[] GetDecodedText()
-        {
-            return wordsForTests;
-        }
-    }
-
     [TestFixture]
     class SimpleTextHandler_Should
     {
         public static void DoTest(string[] words, IWordBlock[] expected, string[] boring = null)
         {
-            ITextDecoder fakeDecoder = new DecoderForTests(words);
-            var handler = new SimpleTextHandler(fakeDecoder.GetDecodedText(), new HashSet<string>(boring ?? new string[0]));
+            var handler = new SimpleTextHandler(words, new HashSet<string>(boring ?? new string[0]));
             IWordBlock[] actual = handler.GetWordBlockArray().ToArray();
             for (int i = 0; i < expected.Length; ++i)
             {
