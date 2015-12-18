@@ -9,32 +9,41 @@ namespace TagCloudGenerator.Classes
 {
     static class CommandsHelper
     {
-        public static T GetResource<T>(string[] args)
+        private class CommandData
         {
-            if (types[typeof (T)] == "path")
+            public CommandData(string pattern, string keyWord, Func<string, string, object> commandConverter)
             {
-                foreach (var word in args)
-                {
-                    if (File.Exists(word))
-                        return (T)commands[types[typeof(T)]](word);
-                }
+                Pattern = pattern;
+                KeyWord = keyWord;
+                CommandConverter = commandConverter;
             }
-            var command = args.Where(c => c.IndexOf(types[typeof(T)], StringComparison.Ordinal) == 0).ToArray();
-            if (command.Length == 0)
-                return default(T);
-            return (T) commands[types[typeof(T)]](command[0]);
+
+            public string Pattern { get; set; }
+            public string KeyWord { get; set; }
+            public Func<string, string, object> CommandConverter { get; set; }
         }
 
-        private static string GetPath(string stringCommand)
+        public static T GetResource<T>(string[] args)
         {
+            var currentCommand = commands[typeof (T)];
+            var command = args.Where(c => c.IndexOf(currentCommand.KeyWord, StringComparison.Ordinal) == 0).ToArray();
+            if (command.Length == 0)
+                return default(T);
+            return (T) currentCommand.CommandConverter(command[0], currentCommand.Pattern);
+        }
+
+        private static string GetPath(string stringCommand, string pattern)
+        {
+            if (!Regex.IsMatch(stringCommand, pattern))
+                throw new Exception();
+            stringCommand = stringCommand.Substring(6, stringCommand.Length - 7);
             if (!File.Exists(stringCommand))
                 throw new Exception();
             return stringCommand;
         }
 
-        private static Size GetSize(string stringCommand)
+        private static Size GetSize(string stringCommand, string pattern)
         {
-            var pattern = "size:[0-9]+,[0-9]+";
             if (!Regex.IsMatch(stringCommand, pattern))
                 throw new Exception();
             stringCommand = stringCommand.Substring(5);
@@ -42,25 +51,23 @@ namespace TagCloudGenerator.Classes
             return new Size(int.Parse(splitted[0]), int.Parse(splitted[1]));
         }
 
-        private static int GetScale(string stringCommand)
+        private static int GetScale(string stringCommand, string pattern)
         {
-            var pattern = "scale:[1-9]";
             if (!Regex.IsMatch(stringCommand, pattern))
                 throw new Exception();
             stringCommand = stringCommand[6].ToString();
             return int.Parse(stringCommand);
         }
 
-        private static bool GetDensityFlag(string stringCommand)
+        private static bool GetDensityFlag(string stringCommand, string pattern)
         {
-            if (stringCommand != "moreDensity")
+            if (stringCommand != pattern)
                 return false;
             return true;
         }
 
-        private static HashSet<string> GetBoringWords(string stringCommand)
+        private static HashSet<string> GetBoringWords(string stringCommand, string pattern)
         {
-            var pattern = "boring:<.+>";
             if (!Regex.IsMatch(stringCommand, pattern))
                 throw new Exception();
             stringCommand = stringCommand.Substring(8, stringCommand.Length - 9);
@@ -71,10 +78,9 @@ namespace TagCloudGenerator.Classes
             return boringWords;
         }
 
-        private static List<SolidBrush> GetColors(string stringCommand)
+        private static List<SolidBrush> GetColors(string stringCommand, string pattern)
         {
             var wordsBrushes = new List<SolidBrush>();
-            var pattern = "colors:<.+>";
             var converter = new ColorConverter();
             if (!Regex.IsMatch(stringCommand, pattern))
                 throw new Exception();
@@ -96,35 +102,23 @@ namespace TagCloudGenerator.Classes
             return wordsBrushes;
         }
 
-        private static Font GetFont(string stringCommand)
+        private static Font GetFont(string stringCommand, string pattern)
         {
-            var pattern = "font:[a-zA-Z ]";
             if (!Regex.IsMatch(stringCommand, pattern))
                 throw new Exception();
             stringCommand = stringCommand.Substring(5);
             return new Font(stringCommand, 12f);
         }
 
-        private static Dictionary<Type, string> types = new Dictionary<Type, string>
+        private static Dictionary<Type, CommandData> commands = new Dictionary<Type, CommandData>
         {
-            {typeof (string), "path"},
-            {typeof (Size), "size"},
-            {typeof (int), "scale"},
-            {typeof (bool), "moreDinsity"},
-            {typeof (HashSet<string>), "boring"},
-            {typeof (Font), "font"},
-            {typeof (List<SolidBrush>), "colors"}
-        };
-
-        private static Dictionary<string, Func<string, object>> commands = new Dictionary<string, Func<string, object>>
-        {
-            {"path", c => GetPath(c)},
-            {"size", c => GetSize(c)},
-            {"scale", c => GetScale(c)},
-            {"moreDinsity", c => GetDensityFlag(c)},
-            {"boring", c => GetBoringWords(c)},
-            {"font", c => GetFont(c)},
-            {"colors", c => GetColors(c)}
+            {typeof (string), new CommandData("path:<.+>", "path", (c,d) => GetPath(c,d))},
+            {typeof (Size), new CommandData("size:[0-9]+,[0-9]+", "size", (c,d) => GetSize(c,d))},
+            {typeof (int), new CommandData("scale:[1-9]", "scale", (c,d) => GetScale(c,d))},
+            {typeof (bool), new CommandData("moreDensity", "moreDensity", (c,d) => GetDensityFlag(c,d))},
+            {typeof (HashSet<string>), new CommandData("boring:<.+>", "boring", (c,d) => GetBoringWords(c,d))},
+            {typeof (Font), new CommandData("font:[a-zA-Z ]", "font", (c,d) => GetFont(c,d))},
+            {typeof (List<SolidBrush>), new CommandData("colors:<.+>", "colors", (c,d) => GetColors(c,d))}
         };
     }
 }

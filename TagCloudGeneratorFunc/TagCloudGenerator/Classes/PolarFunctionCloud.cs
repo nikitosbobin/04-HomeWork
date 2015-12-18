@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using TagCloudGenerator.Interfaces;
 
 namespace TagCloudGenerator.Classes
 {
-    abstract partial class PolarFunctionCloud : ICloudGenerator
+    abstract partial class PolarFunctionCloud
     {
         public abstract Point GetBlockCoords();
         
@@ -21,7 +20,7 @@ namespace TagCloudGenerator.Classes
             FontFamily = font.Name;
         }
 
-        public void DrawNextWord(IWordBlock word)
+        public void DrawNextWord(WordBlock word)
         {
             word.Font = new Font(FontFamily, _currentFontSize);
             var wordWidth = (int)(word.Font.Size * 0.7) * word.Source.Length;

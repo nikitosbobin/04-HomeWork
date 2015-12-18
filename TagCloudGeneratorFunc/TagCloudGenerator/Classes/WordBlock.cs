@@ -1,9 +1,8 @@
 ﻿using System.Drawing;
-using TagCloudGenerator.Interfaces;
 
 namespace TagCloudGenerator.Classes
 {
-    class WordBlock : IWordBlock
+    class WordBlock
     {
         public WordBlock(string source, int frequency = 1)
         {

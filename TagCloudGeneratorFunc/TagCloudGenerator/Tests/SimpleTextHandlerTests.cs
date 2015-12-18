@@ -2,17 +2,16 @@
 using NUnit.Framework;
 using System.Linq;
 using TagCloudGenerator.Classes;
-using TagCloudGenerator.Interfaces;
 
 namespace TagCloudGenerator.Tests
 {
     [TestFixture]
     class SimpleTextHandler_Should
     {
-        public static void DoTest(string[] words, IWordBlock[] expected, string[] boring = null)
+        public static void DoTest(string[] words, WordBlock[] expected, string[] boring = null)
         {
-            var handler = new SimpleTextHandler(words, new HashSet<string>(boring ?? new string[0]));
-            IWordBlock[] actual = handler.GetWordBlockArray().ToArray();
+            WordBlock[] actual = DecodeHelper.ConvertTextToWordBlocks(words,
+                new HashSet<string>(boring ?? new string[0]));
             for (int i = 0; i < expected.Length; ++i)
             {
                 Assert.AreEqual(expected[i].Source, actual[i].Source);
