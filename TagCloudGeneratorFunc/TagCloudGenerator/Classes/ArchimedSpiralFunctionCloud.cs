@@ -28,6 +28,7 @@ namespace TagCloudGenerator.Classes
             Font font = null, bool moreDensity = false) : base(words, wordsScale, 
                 imageSize, font, moreDensity)
         {
+            CreateCloud();
         }
     }
 }

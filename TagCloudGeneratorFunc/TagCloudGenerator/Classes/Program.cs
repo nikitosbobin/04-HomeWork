@@ -15,7 +15,6 @@ namespace TagCloudGenerator.Classes
                 CommandsHelper.GetResource<HashSet<string>>(args));
             var cloud = new ArchimedSpiralFunctionCloud(temp, CommandsHelper.GetResource<int>(args),
                 CommandsHelper.GetResource<Size>(args), CommandsHelper.GetResource<Font>(args), CommandsHelper.GetResource<bool>(args));
-            cloud.CreateCloud();
             var resultImage = ImageHelper.GetCloudImage(cloud.Words, CommandsHelper.GetResource<Size>(args),
                 CommandsHelper.GetResource<List<SolidBrush>>(args));
             ImageHelper.SaveImage(resultImage, "out", ImageFormat.Png);
