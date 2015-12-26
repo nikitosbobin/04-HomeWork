@@ -15,15 +15,19 @@ namespace TagCloudGenerator.Classes
         public static Bitmap GetCloudImage(WordBlock[] wordBlocks, Size imageSize, List<SolidBrush> wordsBrushes)
         {
             var image = new Bitmap(imageSize.Width, imageSize.Height);
-            var graphics = Graphics.FromImage(image);
-            var rnd = new Random(DateTime.Now.Millisecond);
-            graphics.Clear(Color.CadetBlue);
-            foreach (var word in wordBlocks)
+            Graphics graphics;
+            using (graphics = Graphics.FromImage(image))
             {
-                graphics.DrawString(word.Source, word.Font, wordsBrushes[rnd.Next(0, wordsBrushes.Count)],
-                    (imageSize.Width / 2 + word.WordRectangle.X), (imageSize.Height / 2 - word.WordRectangle.Y));
+
+                var rnd = new Random(DateTime.Now.Millisecond);
+                graphics.Clear(Color.CadetBlue);
+                foreach (var word in wordBlocks)
+                {
+                    graphics.DrawString(word.Source, word.Font, wordsBrushes[rnd.Next(0, wordsBrushes.Count)],
+                        (imageSize.Width / 2 + word.WordRectangle.X), (imageSize.Height / 2 - word.WordRectangle.Y));
+                }
+                return image;
             }
-            return image;
-        }
+           }
     }
 }
